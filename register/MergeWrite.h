@@ -67,6 +67,9 @@ private:
                         (_accumulated_value & ~F::mask)
                             | ((new_value << F::offset) & F::mask)>;
 
+    template<typename R2, typename R2::type, FieldOffset, typename R2::type>
+	friend class MergeWrite_tmpl;
+
     // Default constructor.
     MergeWrite_tmpl() = default;
 

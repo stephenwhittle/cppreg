@@ -287,6 +287,8 @@ private:
                         FieldOffset{0},
                         (_accumulated_value & ~F::mask)
                             | ((new_value << F::offset) & F::mask)>;
+    template<typename R2, typename R2::type, FieldOffset, typename R2::type>
+    friend class MergeWrite_tmpl;
     MergeWrite_tmpl() = default;
     static_assert(!Register::shadow::value,
                   "merge write is not available for shadow value register");
