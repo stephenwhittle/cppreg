@@ -103,7 +103,7 @@ struct Register {
                                            F::mask,
                                            F::offset,
                                            value>>
-    static T&& merge_write() noexcept {
+    static T merge_write() noexcept {
 
         // Check overflow.
         static_assert(
@@ -111,7 +111,7 @@ struct Register {
                 value,
             "Register::merge_write<value>:: value too large for the field");
 
-        return std::move(T::create());
+        return T::create();
     }
 
     // Sanity check.

@@ -310,7 +310,7 @@ public:
                               _accumulated_value>::write(mmio_device);
     }
     template <typename F, base_type field_value>
-    propagated<F, field_value>&& with() const&& noexcept {
+    propagated<F, field_value> with() const&& noexcept {
         static_assert(
             std::is_same<typename F::parent_register, Register>::value,
             "MergeWrite_tmpl:: field is not from the same register");
@@ -320,7 +320,7 @@ public:
                                       (F::mask >> F::offset)>::value;
         static_assert(no_overflow,
                       "MergeWrite_tmpl:: field overflow in with() call");
-        return std::move(propagated<F, field_value>{});
+        return propagated<F, field_value>{};
     }
 };
 template <typename Register, typename Register::type mask>
@@ -400,12 +400,12 @@ struct Register {
                                            F::mask,
                                            F::offset,
                                            value>>
-    static T&& merge_write() noexcept {
+    static T merge_write() noexcept {
         static_assert(
             internals::check_overflow<type, value, (F::mask >> F::offset)>::
                 value,
             "Register::merge_write<value>:: value too large for the field");
-        return std::move(T::create());
+        return T::create();
     }
     static_assert(size != 0u, "Register:: register definition with zero size");
     static_assert(internals::is_aligned<reg_address,

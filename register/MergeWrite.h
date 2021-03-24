@@ -117,7 +117,7 @@ public:
      * @return A merge write instance with accumulated data.
      */
     template <typename F, base_type field_value>
-    propagated<F, field_value>&& with() const&& noexcept {
+    propagated<F, field_value> with() const&& noexcept {
 
         // Check that the field belongs to the register.
         static_assert(
@@ -132,7 +132,7 @@ public:
         static_assert(no_overflow,
                       "MergeWrite_tmpl:: field overflow in with() call");
 
-        return std::move(propagated<F, field_value>{});
+        return propagated<F, field_value>{};
     }
 };
 
